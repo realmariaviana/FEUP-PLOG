@@ -1,5 +1,5 @@
 /*
-['/Users/mariajoaosenraviana/Desktop/FEUP-PLOG/straight4.pl'].
+['/Users/mariajoaosenraviana/Desktop/FEUP-PLOG/src/straight4.pl'].
 */
 
 :- include('menu.pl').
@@ -12,4 +12,5 @@
 play :-
     displayMenu,
     get_clean_char(Option),
-    menu_option(Option).
+    menu_option(Option),
+    !.
