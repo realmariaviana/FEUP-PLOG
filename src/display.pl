@@ -4,9 +4,9 @@
 table([
 [0,0,0,0,0],
 [0,0,0,0,0],
-[0,0,0,0,0],
-[0,0,0,0,0],
-[0,0,0,0,0]]).
+[0,1,2,2,0],
+[0,0,0,0,1],
+[2,0,0,0,0]]).
 
 % Displays the game banner
 display_banner :-
@@ -19,29 +19,38 @@ display_banner :-
     write('|_______|  |___|  |___|  |_||__| |__||___| |_______||__| |__|  |___|        |___|'), nl, nl, nl, nl.
 
 print_table_header :-
-    write('   '),
-    write('A'), write('|'), write('B'), write('|'),
-    write('C'), write('|'), write('D'), write('|'),
-    write('E'), write('|'), nl.
+write('     '),
+write('A'), write(' '), write('|'), write(' '), write('B'), write(' '), write('|'), write(' '),
+write('C'), write(' '), write('|'), write(' '), write('D'), write(' '), write('|'), write(' '), write('E'), nl.
 
-print_cell(0):- put_code(32).
-print_cell(1):- put_code(9679).
+print_cell(0):- put_code(32), !.
+print_cell(1):- put_code(9679), !.
 print_cell(2):- put_code(9675).
 
-printColumn([]).
+printColumn([]):- !.
 printColumn([H|T]) :-
     print_cell(H),
     write(' | '),
     printColumn(T).
 
-printBoard([]).
-printBoard([H|T]) :-
+printBoard([], 6):- !.
+printBoard([H|T], N) :-
+  print_format_number(N),
+  write('| '),
   printColumn(H),
+  print_format_number(N),
   nl,
-  printBoard(T).
+  Next is (N+1),
+  printBoard(T, Next).
+
+print_format_number(N) :-
+  !,
+  write('0'),
+  write(N),
+  write(' ').
 
 init :-
   table(Board),
   print_table_header,
-  printBoard(Board),
+  printBoard(Board, 1),
   print_table_header.

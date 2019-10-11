@@ -6,11 +6,9 @@
 :- include('display.pl').
 :- include('tools.pl').
 :- include('game.pl').
-:- include('gamePvP.pl').
 
 % Starts the program
 play :-
     displayMenu,
     get_clean_char(Option),
-    menu_option(Option),
-    !.
+    menu_option(Option).
