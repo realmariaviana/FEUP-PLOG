@@ -1,12 +1,14 @@
 :- use_module(library(lists)).
 
 %
-table([
-[0,0,0,0,0],
-[0,0,0,0,0],
-[0,1,2,2,0],
-[0,0,0,0,1],
-[2,0,0,0,0]]).
+table([[0,0,0,0,0],
+[0,1,1,2,0],
+[0,2,1,0,0],
+[0,2,0,0,0],
+[0,0,0,0,0]
+]).
+
+
 
 % Displays the game banner
 display_banner :-
@@ -23,34 +25,41 @@ write('     '),
 write('A'), write(' '), write('|'), write(' '), write('B'), write(' '), write('|'), write(' '),
 write('C'), write(' '), write('|'), write(' '), write('D'), write(' '), write('|'), write(' '), write('E'), nl.
 
-print_cell(0):- put_code(32), !.
+print_cell(0):- put_code(173), !.
 print_cell(1):- put_code(9679), !.
 print_cell(2):- put_code(9675).
 
-printColumn([]):- !.
-printColumn([H|T]) :-
+print_column([]):- !.
+print_column([H|T]) :-
     print_cell(H),
     write(' | '),
-    printColumn(T).
+    print_column(T).
 
-printBoard([], 6):- !.
-printBoard([H|T], N) :-
+print_board([], 6):- !.
+print_board([H|T], N) :-
   print_format_number(N),
   write('| '),
-  printColumn(H),
+  print_column(H),
   print_format_number(N),
   nl,
-  Next is (N+1),
-  printBoard(T, Next).
+  Next is (N + 1),
+  print_board(T, Next).
 
 print_format_number(N) :-
   !,
-  write('0'),
   write(N),
-  write(' ').
+  write('  ').
 
-init :-
+initBoard(Board) :-
   table(Board),
   print_table_header,
-  printBoard(Board, 1),
+  print_board(Board, 1),
   print_table_header.
+
+show_player(Player) :-
+  Player = '1', nl, write('PLAYER: black'), nl, nl;
+  Player = '2', nl, write('PLAYER: white'), nl, nl.
+
+display_game(Board, Player) :-
+  show_player(Player),
+  initBoard(Board).
