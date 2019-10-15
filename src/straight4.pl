@@ -6,6 +6,7 @@
 :- include('display.pl').
 :- include('tools.pl').
 :- include('game.pl').
+:- include('PvP.pl').
 
 % Starts the program
 play :-

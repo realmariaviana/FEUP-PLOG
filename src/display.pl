@@ -2,11 +2,11 @@
 
 %
 table([[0,0,0,0,0],
-[0,1,1,2,0],
-[0,2,1,0,0],
-[0,2,0,0,0],
-[0,0,0,0,0]
-]).
+           [0,2,2,2,0],
+           [1,1,1,1,2],
+           [0,0,0,0,0],
+           [0,0,0,0,0]
+           ]).
 
 
 
@@ -59,6 +59,12 @@ initBoard(Board) :-
 show_player(Player) :-
   Player = '1', nl, write('PLAYER: black'), nl, nl;
   Player = '2', nl, write('PLAYER: white'), nl, nl.
+
+victory('2') :-
+  write('           <<< White victory >>>\n\n'), !.
+
+victory('1') :-
+  write('           <<< Black victory >>>\n\n').
 
 display_game(Board, Player) :-
   show_player(Player),
