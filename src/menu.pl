@@ -1,5 +1,5 @@
 % Displays the main menu
-displayMenu :-
+display_menu :-
     display_banner,
     write('1 - Human vs Human\n'),
     write('2 - Human vs CPU\n'),
@@ -8,8 +8,7 @@ displayMenu :-
 
 % Executes the appropriate actions depending on the option chosen
 menu_option('1'):-
-  start_game(1, 1), !.
-  %play.
+  start_game(1, 1), !, play.
 
 menu_option('4').
 

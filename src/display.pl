@@ -1,16 +1,14 @@
 :- use_module(library(lists)).
 
 %
-table([[0,0,0,0,0],
-           [0,2,2,2,0],
-           [1,1,1,1,2],
-           [0,0,0,0,0],
-           [0,0,0,0,0]
-           ]).
+table([
+[0,0,0,0,0],
+[0,0,0,0,0],
+[0,0,0,0,0],
+[0,0,0,0,0],
+[0,0,0,0,0]
+]).
 
-
-
-% Displays the game banner
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
     write('|       ||       ||    _ |  |   _   ||   | |       ||  | |  ||       |  | | |   |'), nl,
@@ -27,7 +25,7 @@ write('C'), write(' '), write('|'), write(' '), write('D'), write(' '), write('|
 
 print_cell(0):- put_code(173), !.
 print_cell(1):- put_code(9679), !.
-print_cell(2):- put_code(9675).
+print_cell(2):- put_code(9675), !.
 
 print_column([]):- !.
 print_column([H|T]) :-
@@ -68,4 +66,4 @@ victory('1') :-
 
 display_game(Board, Player) :-
   show_player(Player),
-  initBoard(Board).
+    initBoard(Board).

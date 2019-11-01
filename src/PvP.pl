@@ -1,3 +1,22 @@
+start_PvP(Game) :-
+    nth0(0, Game, Table),
+    update_game_table(Game, NewTable, StartedGame),
+    update_game_PvP(StartedGame, '1').
+
+update_game_PvP(Game, Player) :-
+    play_turn_PvP(Game, Player, PlayedGame).
+
+play_turn_PvP(Game, Player, PlayedGame) :-
+    nth0(0, Game, Board),
+    display_game(Board, Player),
+    valid_moves(Board, Player, ListOfMoves), % Gets valid moves
+    get_play_input(Player, Move), % Gets player input
+    (
+        move(Move, ListOfMoves, Board, NewBoard); % Verifies if player move is acceptable
+        !, play_turn_PvP(Game, Player, PlayedGame) % If not repeats the process.
+    ),
+    update_game_table(Game, NewBoard, PlayedGame). % Updates the game board with the new one
+
 get_play_input(Player, Play) :-
     write('1 - Choose Column'), nl,
     write('2 - Choose Line'), nl,
