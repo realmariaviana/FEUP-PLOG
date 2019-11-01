@@ -1,5 +1,6 @@
 start_PvP(Game) :-
     nth0(0, Game, Table),
+    replace_piece(3, 3, 1, Table, NewTable),
     update_game_table(Game, NewTable, StartedGame),
     update_game_PvP(StartedGame, '1').
 

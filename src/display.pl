@@ -33,25 +33,24 @@ print_column([H|T]) :-
     write(' | '),
     print_column(T).
 
-print_board([], 6):- !.
-print_board([H|T], N) :-
+board([], 6):- !.
+board([H|T], N) :-
   print_format_number(N),
   write('| '),
   print_column(H),
   print_format_number(N),
   nl,
   Next is (N + 1),
-  print_board(T, Next).
+  board(T, Next).
 
 print_format_number(N) :-
   !,
   write(N),
   write('  ').
 
-initBoard(Board) :-
-  table(Board),
+print_board(Board) :-
   print_table_header,
-  print_board(Board, 1),
+  board(Board, 1),
   print_table_header.
 
 show_player(Player) :-
@@ -65,5 +64,5 @@ victory('1') :-
   write('           <<< Black victory >>>\n\n').
 
 display_game(Board, Player) :-
-  show_player(Player),
-    initBoard(Board).
+    print_board(Board),
+    show_player(Player).

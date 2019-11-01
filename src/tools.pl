@@ -48,3 +48,25 @@ get_second_to_last_element([Head | [_ | []]], Head) :- !.
 
 get_second_to_last_element([_ | [Head2 | Tail]], SecondToLastElement) :-
   get_second_to_last_element([Head2 | Tail], SecondToLastElement).
+
+replace_piece(Column, Line, NewElement, Board, NewBoard) :-
+  table(Board),
+  get_line(Line, Board, List),
+  replace_element(Column, List, NewElement, NewLine),
+  replace_line(Line, Board, NewLine, NewBoard).
+
+  % Gets a line of Index N in a board
+  get_line(1, [Line | _ ], Line).
+
+  get_line(N, [ _ | Remainder], Line) :-
+      N > 1,
+      Previous is N - 1,
+      get_line(Previous, Remainder, Line).
+
+      % Replaces a line by another in a board
+    replace_line(1, [_ | Remainder], NewList, [NewList | Remainder]).
+
+    replace_line(Line, [Head | Remainder], NewList, [Head | NewLine]) :-
+        Line > 1,
+        Previous is Line - 1,
+        replace_line(Previous, Remainder, NewList, NewLine).

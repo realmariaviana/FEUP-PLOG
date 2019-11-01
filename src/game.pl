@@ -1,5 +1,6 @@
 create_game(Game, Difficulty) :-
-    Game = [Board, Difficulty].
+    table(Board).
+  % Game = [Board, Difficulty]
 
 % Starts a game depending on the mode.
 start_game(1, 1) :-
