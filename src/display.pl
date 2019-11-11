@@ -9,6 +9,14 @@ table([
 [0,0,0,0,0]
 ]).
 
+table2([
+[1,0,0,0,0],
+[0,0,0,0,0],
+[0,0,2,0,0],
+[0,0,0,0,0],
+[0,0,1,0,0]
+]).
+
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
     write('|       ||       ||    _ |  |   _   ||   | |       ||  | |  ||       |  | | |   |'), nl,
@@ -20,8 +28,8 @@ display_banner :-
 
 print_table_header :-
 write('     '),
-write('A'), write(' '), write('|'), write(' '), write('B'), write(' '), write('|'), write(' '),
-write('C'), write(' '), write('|'), write(' '), write('D'), write(' '), write('|'), write(' '), write('E'), nl.
+write('1'), write(' '), write('|'), write(' '), write('2'), write(' '), write('|'), write(' '),
+write('3'), write(' '), write('|'), write(' '), write('4'), write(' '), write('|'), write(' '), write('5'), nl.
 
 print_cell(0):- put_code(173), !.
 print_cell(1):- put_code(9679), !.
@@ -49,7 +57,6 @@ print_format_number(N) :-
   write('  ').
 
 print_board(Board) :-
-  table(Board),
   print_table_header,
   board(Board, 1),
   print_table_header.
@@ -61,3 +68,11 @@ show_player(Player) :-
 display_game(Board, Player) :-
     print_board(Board),
     show_player(Player).
+
+init:-
+ table(Board),
+ table2(Board2),
+ print_board(Board),
+ readInput(Row, Column),
+ checkPlay(Row, Column, Board2, Bool),
+ write(Bool).
