@@ -49,6 +49,7 @@ print_format_number(N) :-
   write('  ').
 
 print_board(Board) :-
+  table(Board),
   print_table_header,
   board(Board, 1),
   print_table_header.
@@ -56,12 +57,6 @@ print_board(Board) :-
 show_player(Player) :-
   Player = '1', nl, write('PLAYER: black'), nl, nl;
   Player = '2', nl, write('PLAYER: white'), nl, nl.
-
-victory('2') :-
-  write('           <<< White victory >>>\n\n'), !.
-
-victory('1') :-
-  write('           <<< Black victory >>>\n\n').
 
 display_game(Board, Player) :-
     print_board(Board),
