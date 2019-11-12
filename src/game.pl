@@ -47,13 +47,19 @@ gameLoop(Board, Player, NBoard, Counter):-
 gameLoop(Board, Player, NBoard, 0):-
   write('You have all your available pieces on the board.'),
   nl,
+  nl,
   write('Piece you want to move: '),
   nl,
   readInput(Row, Column),
+  getValueFromMatrix(Board, Row, Column, Value),
+  Value=:=Player,
+  replaceInMatrix(Board, Row, Column, 0, BoardF),
   nl,
   write('Where you want to move the piece to: '),
   nl,
-  readInput(Row, Column).
+  move(BoardF, Player, NewBoard),
+  nextPlayer(Player, NextPlayer),
+  gameLoop(NewBoard, NextPlayer, NBoard, 0).
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
