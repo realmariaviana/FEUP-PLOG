@@ -26,8 +26,15 @@ manageInput(0) :-
 
 readInput(Row, Column) :-
   write('Choose row (1 to 5): '),
-  read(Row),
-  get_char(_),
+  readImput(Row),
   write('Choose column (1 to 5): '),
-  read(Column),
+  readImput(Column).
+
+readImput(Imput):-
+  get_code(Code),
+  convertCode(Code, Imput),
   get_char(_).
+
+convertCode(Code, Inte):-
+  Aux is Code - 48,
+  Inte is Aux.
