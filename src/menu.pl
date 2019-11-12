@@ -21,7 +21,7 @@ manageInput(3) :-
   start_game('C','C'),
   display_menu.
 
-manageInput(0) :-
+manageInput(4) :-
   write('\nExiting...\n\n').
 
 readInput(Row, Column) :-

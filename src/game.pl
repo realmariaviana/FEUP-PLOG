@@ -1,7 +1,15 @@
 
 % Starts a game depending on the mode.
-start_game(Player1, Player2) :-
+start_game('P', 'P') :-
     write('\n       <<< Started Human vs Human >>>\n'), nl,
+    display_game(Board, Player).
+
+start_game('P', 'C') :-
+    write('\n       <<< Started Human vs CPU >>>\n'), nl,
+    display_game(Board, Player).
+
+start_game('C', 'C') :-
+    write('\n       <<< Started CPU vs CPU >>>\n'), nl,
     display_game(Board, Player).
 
 isEmptyCell(Board, Row, Column, Res) :-
