@@ -34,8 +34,7 @@ move(Board, Player, NewBoard):-
   nl,
   move(Board, Player, NewBoard).
 
-gameLoop1(Board, Player, NBoard, Counter):-
-  
+gameLoop(Board, Player, NBoard, Counter):-
   nl,
   display_game(Board, Player),
   nl,
@@ -43,11 +42,18 @@ gameLoop1(Board, Player, NBoard, Counter):-
   move(Board, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
   Ncounter is Counter - 1,
-  write(Ncounter),
-  gameLoop1(NewBoard, NextPlayer, NBoard, Ncounter).
+  gameLoop(NewBoard, NextPlayer, NBoard, Ncounter).
   
-gameLoop1(Board, Player, NBoard, 0):-
-  write('segunda parte do jogo').
+gameLoop(Board, Player, NBoard, 0):-
+  write('You have all your available pieces on the board.'),
+  nl,
+  write('Piece you want to move: '),
+  nl,
+  readInput(Row, Column),
+  nl,
+  write('Where you want to move the piece to: '),
+  nl,
+  readInput(Row, Column).
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
