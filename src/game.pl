@@ -86,7 +86,7 @@ move_PvC_random(Board, NBoard):-
 
 moveCPU_random(Board,NewBoard):-
   random(1,6,Aux1),
-  random(1,5,Aux2),
+  random(1,6,Aux2),
   checkPlay(Aux1,Aux2, Board,Bool),
   (Bool =:= 0 -> replaceInMatrix(Board, Aux1, Aux2, 2, NewBoard);moveCPU_random(Board,NewBoard)).
   
