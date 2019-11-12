@@ -5,13 +5,15 @@ start_game('P', 'P') :-
     table(Board),
     Player is 1,
    % display_game(Board, Player).
-   init.
+     moveComplete(Board, Player, Bd).
 
 start_game('P', 'C') :-
     write('\n       <<< Started Human vs CPU >>>\n'), nl,
     table(Board),
     Player is 1,
-    display_game(Board, Player).
+    % display_game(Board, Player).
+    move_PvC(Board,Bd).
+
 
 start_game('C', 'C') :-
     write('\n       <<< Started CPU vs CPU >>>\n'), nl,
@@ -73,3 +75,11 @@ nextPlayer(1, NextPlayer):-
 
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
+
+move_PvC(Board, NBoard):-
+  print_board(Board),
+  nl,
+  move(Board, 1, NewBoard),
+  %TODO- Implement cpu plays
+  
+  move_PvC(NewBoard, NBoard).
