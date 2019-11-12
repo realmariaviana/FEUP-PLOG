@@ -55,8 +55,8 @@ print_board(Board) :-
   print_table_header.
 
 show_player(Player) :-
-  Player =:= 1, nl, write('        PLAYER: black'), nl, nl;
-  Player =:= 2, nl, write('        PLAYER: white'), nl, nl.
+  Player =:= 1, nl, write('       PLAYER: black'), nl, nl;
+  Player =:= 2, nl, write('       PLAYER: white'), nl, nl.
 
 display_game(Board, Player) :-
     print_board(Board),
@@ -65,9 +65,4 @@ display_game(Board, Player) :-
 init:-
  table(Board),
  Player is 1,
- nl,
- show_player(Player),
- nl,
- print_board(Board),
- nl,
- moveComplete(Board,Player,Bd).
+ moveComplete(Board, Player, Bd).

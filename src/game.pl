@@ -44,17 +44,17 @@ move(Board, Player, NewBoard):-
   move(Board, Player, NewBoard).
 
 moveComplete(Board, Player, NBoard):-
-  move(Board, Player, NewBoard),
-  nextPlayer(Player, NextPlayer),
   nl,
   show_player(Player),
   nl,
-  print_board(NewBoard),
+  print_board(Board),
   nl,
+  move(Board, Player, NewBoard),
+  nextPlayer(Player, NextPlayer),
   moveComplete(NewBoard, NextPlayer, NBoard).
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
 
 nextPlayer(2, NextPlayer):-
-    NextPlayer is 1.
+  NextPlayer is 1.
