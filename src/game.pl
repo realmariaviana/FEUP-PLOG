@@ -22,15 +22,6 @@ checkPlay(Row, Column, Board, Res):-
 
 checkPlay(Row, Column, Board, Res):- Res is 1.
 
-/*gameLoop1(Board, Player, 0):-
-  gameLoop2.
-
-gameLoop1(Board, Player, Counter):-
-  move(Board)
-  Ncounter is Counter - 1,
-  gameLoop1(NBoard, Player, Ncounter, NewBoard).
-*/
-
 move(Board, Player, NewBoard):-
   readInput(Row, Column),
   checkPlay(Row, Column, Board, Bool),
@@ -43,15 +34,20 @@ move(Board, Player, NewBoard):-
   nl,
   move(Board, Player, NewBoard).
 
-moveComplete(Board, Player, NBoard):-
+gameLoop1(Board, Player, NBoard, Counter):-
+  
   nl,
-  show_player(Player),
+  display_game(Board, Player),
   nl,
-  print_board(Board),
-  nl,
+  Counter > 0,
   move(Board, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
-  moveComplete(NewBoard, NextPlayer, NBoard).
+  Ncounter is Counter - 1,
+  write(Ncounter),
+  gameLoop1(NewBoard, NextPlayer, NBoard, Ncounter).
+  
+gameLoop1(Board, Player, NBoard, 0):-
+  write('segunda parte do jogo').
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
