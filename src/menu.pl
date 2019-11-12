@@ -27,5 +27,7 @@ manageInput(0) :-
 readInput(Row, Column) :-
   write('Choose row (1 to 5): '),
   read(Row),
+  get_char(_),
   write('Choose column (1 to 5): '),
-  read(Column).
+  read(Column),
+  get_char(_).

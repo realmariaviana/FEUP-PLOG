@@ -9,13 +9,6 @@ table([
 [0,0,0,0,0]
 ]).
 
-table2([
-[1,0,0,0,0],
-[0,0,0,0,0],
-[0,0,2,0,0],
-[0,0,0,0,0],
-[0,0,1,0,0]
-]).
 
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
@@ -62,8 +55,8 @@ print_board(Board) :-
   print_table_header.
 
 show_player(Player) :-
-  Player = '1', nl, write('PLAYER: black'), nl, nl;
-  Player = '2', nl, write('PLAYER: white'), nl, nl.
+  Player =:= 1, nl, write('        PLAYER: black'), nl, nl;
+  Player =:= 2, nl, write('        PLAYER: white'), nl, nl.
 
 display_game(Board, Player) :-
     print_board(Board),
@@ -71,8 +64,10 @@ display_game(Board, Player) :-
 
 init:-
  table(Board),
- table2(Board2),
+ Player is 1,
+ nl,
+ show_player(Player),
+ nl,
  print_board(Board),
- readInput(Row, Column),
- checkPlay(Row, Column, Board2, Bool),
- write(Bool).
+ nl,
+ moveComplete(Board,Player,Bd).
