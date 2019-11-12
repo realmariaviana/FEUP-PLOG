@@ -12,7 +12,7 @@ start_game('P', 'C') :-
     table(Board),
     Player is 1,
     % display_game(Board, Player).
-    move_PvC(Board,Bd).
+    move_PvC_random(Board,Bd).
 
 
 start_game('C', 'C') :-
@@ -76,10 +76,17 @@ nextPlayer(1, NextPlayer):-
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
 
-move_PvC(Board, NBoard):-
+move_PvC_random(Board, NBoard):-
   print_board(Board),
   nl,
   move(Board, 1, NewBoard),
   %TODO- Implement cpu plays
+  moveCPU_random(NewBoard,AuxBoard),
+  move_PvC(AuxBoard, NBoard).
+
+moveCPU_random(Board,NewBoard):-
+  random(1,6,Aux1),
+  random(1,5,Aux2),
+  checkPlay(Aux1,Aux2, Board,Bool),
+  (Bool =:= 0 -> replaceInMatrix(Board, Aux1, Aux2, 2, NewBoard);moveCPU_random(Board,NewBoard)).
   
-  move_PvC(NewBoard, NBoard).
