@@ -1,7 +1,24 @@
 
 % Starts a game depending on the mode.
-start_game(Player1, Player2) :-
+start_game('P', 'P') :-
     write('\n       <<< Started Human vs Human >>>\n'), nl,
+    table(Board),
+    Player is 1,
+   % display_game(Board, Player).
+     moveComplete(Board, Player, Bd).
+
+start_game('P', 'C') :-
+    write('\n       <<< Started Human vs CPU >>>\n'), nl,
+    table(Board),
+    Player is 1,
+    % display_game(Board, Player).
+    move_PvC_random(Board,Bd).
+
+
+start_game('C', 'C') :-
+    write('\n       <<< Started CPU vs CPU >>>\n'), nl,
+    table(Board),
+    Player is 1,
     display_game(Board, Player).
 
 isEmptyCell(Board, Row, Column, Res) :-
@@ -66,3 +83,18 @@ nextPlayer(1, NextPlayer):-
 
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
+
+move_PvC_random(Board, NBoard):-
+  print_board(Board),
+  nl,
+  move(Board, 1, NewBoard),
+  %TODO- Implement cpu plays
+  moveCPU_random(NewBoard,AuxBoard),
+  move_PvC_random(AuxBoard, NBoard).
+
+moveCPU_random(Board,NewBoard):-
+  random(1,6,Aux1),
+  random(1,6,Aux2),
+  checkPlay(Aux1,Aux2, Board,Bool),
+  (Bool =:= 0 -> replaceInMatrix(Board, Aux1, Aux2, 2, NewBoard);moveCPU_random(Board,NewBoard)).
+  
