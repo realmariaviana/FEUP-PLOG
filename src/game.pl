@@ -82,7 +82,7 @@ move_PvC_random(Board, NBoard):-
   move(Board, 1, NewBoard),
   %TODO- Implement cpu plays
   moveCPU_random(NewBoard,AuxBoard),
-  move_PvC(AuxBoard, NBoard).
+  move_PvC_random(AuxBoard, NBoard).
 
 moveCPU_random(Board,NewBoard):-
   random(1,6,Aux1),
