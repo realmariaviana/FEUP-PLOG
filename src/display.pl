@@ -9,7 +9,6 @@ table([
 [0,0,0,0,0]
 ]).
 
-
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
     write('|       ||       ||    _ |  |   _   ||   | |       ||  | |  ||       |  | | |   |'), nl,
@@ -59,10 +58,11 @@ show_player(Player) :-
   Player =:= 2, nl, write('       PLAYER: white'), nl, nl.
 
 display_game(Board, Player) :-
-    print_board(Board),
-    show_player(Player).
+  show_player(Player),
+  nl,
+  print_board(Board).
 
 init:-
  table(Board),
  Player is 1,
- moveComplete(Board, Player, Bd).
+ gameLoop(Board, Player, NBoard, 8).

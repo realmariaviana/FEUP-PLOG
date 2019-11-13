@@ -39,15 +39,6 @@ checkPlay(Row, Column, Board, Res):-
 
 checkPlay(Row, Column, Board, Res):- Res is 1.
 
-/*gameLoop1(Board, Player, 0):-
-  gameLoop2.
-
-gameLoop1(Board, Player, Counter):-
-  move(Board)
-  Ncounter is Counter - 1,
-  gameLoop1(NBoard, Player, Ncounter, NewBoard).
-*/
-
 move(Board, Player, NewBoard):-
   readInput(Row, Column),
   checkPlay(Row, Column, Board, Bool),
@@ -60,15 +51,32 @@ move(Board, Player, NewBoard):-
   nl,
   move(Board, Player, NewBoard).
 
-moveComplete(Board, Player, NBoard):-
+gameLoop(Board, Player, NBoard, Counter):-
   nl,
-  show_player(Player),
+  display_game(Board, Player),
   nl,
-  print_board(Board),
-  nl,
+  Counter > 0,
   move(Board, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
-  moveComplete(NewBoard, NextPlayer, NBoard).
+  Ncounter is Counter - 1,
+  gameLoop(NewBoard, NextPlayer, NBoard, Ncounter).
+  
+gameLoop(Board, Player, NBoard, 0):-
+  write('You have all your available pieces on the board.'),
+  nl,
+  nl,
+  write('Piece you want to move: '),
+  nl,
+  readInput(Row, Column),
+  getValueFromMatrix(Board, Row, Column, Value),
+  Value=:=Player,
+  replaceInMatrix(Board, Row, Column, 0, BoardF),
+  nl,
+  write('Where you want to move the piece to: '),
+  nl,
+  move(BoardF, Player, NewBoard),
+  nextPlayer(Player, NextPlayer),
+  gameLoop(NewBoard, NextPlayer, NBoard, 0).
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
