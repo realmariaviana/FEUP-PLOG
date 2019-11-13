@@ -17,10 +17,10 @@ table2([
   ]).
 table3([
   [1,0,0,0,0],
-  [1,0,0,0,0],
-  [1,0,0,0,0],
-  [1,0,0,0,0],
-  [0,0,0,0,0]
+  [1,0,0,2,0],
+  [1,2,0,2,0],
+  [1,0,0,2,0],
+  [0,0,0,2,0]
   ]).
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
@@ -82,11 +82,13 @@ init:-
 
 check:-
   table2(Board2),
+  table3(Board3),
   Player1 is 1,
   Player2 is 2,
   check_game_over(Board2, Player1, Res1),
   check_game_over(Board2, Player2, Res2),
-  game_over(Res1,Res2).
+  check_game_over(Board3, Player1, Res1),
+  check_game_over(Board3, Player2, Res2).
 
 game_over(Res1,Res2):-
   write('Result code 1:'),write(Res1),write('\n'),
