@@ -6,6 +6,7 @@
 :- include('display.pl').
 :- include('game.pl').
 :- include('tools.pl').
+:- include('game_over.pl').
 :- use_module(library(random)).
 
 % Starts the program
