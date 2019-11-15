@@ -1,4 +1,3 @@
-% Starts a game depending on the mode.
 start_game:-
     nl, nl, nl, 
     write('   Started Player vs Player'), nl,
@@ -7,7 +6,8 @@ start_game:-
     gameLoop(Board, Player, NBoard, 8).
 
 start_game('P', 'C') :-
-    write('\n       <<< Started Human vs CPU >>>\n'), nl,
+    nl, nl, nl, 
+    write('   Started Player vs CPU'), nl,
     table(Board),
     Player is 1,
     % display_game(Board, Player).
@@ -15,7 +15,8 @@ start_game('P', 'C') :-
 
 
 start_game('C', 'C') :-
-    write('\n       <<< Started CPU vs CPU >>>\n'), nl,
+    nl, nl, nl, 
+    write('   Started CPU vs CPU'), nl,
     table(Board),
     Player is 1,
     display_game(Board, Player).
