@@ -1,28 +1,24 @@
 % Displays the main menu
 display_menu :-
+    write('\e[2J'),
     display_banner,
-    write('1 - Human vs Human\n'),
-    write('2 - Human vs CPU\n'),
-    write('3 - CPU vs CPU\n'),
-    write('4 - Exit\n'),
-    read(Input),
-    manageInput(Input).
+    write('1. Player vs Player\n'),
+    write('2. Player vs CPU\n'),
+    write('3. CPU vs CPU\n'),
+    write('0. Exit\n'),
+    nl, 
+    write('Enter an option: '),
+    get_clean_char(Option),
+    menu_option(Option).
 
 % Executes the appropriate actions depending on the option chosen
-manageInput(1) :-
-  start_game('P','P'),
-  display_menu.
+menu_option('1'):- start_game.
 
-manageInput(2) :-
-  start_game('P','C'),
-  display_menu.
+menu_option('2') :- write('bot.').
 
-manageInput(3) :-
-  start_game('C','C'),
-  display_menu.
+menu_option('3') :- write('bot.').
 
-manageInput(4) :-
-  write('\nExiting...\n\n').
+menu_option('0'):- write('\nExiting...\n\n').
 
 readInput(Row, Column) :-
   get_play_row(Row),
@@ -31,7 +27,7 @@ readInput(Row, Column) :-
 get_play_row(Row) :-
     write('Row (1 to 5): '),
     get_clean_int(Row), 
-    Row > 0, Row < 5, !.
+    Row > 0, Row < 6, !.
 
 get_play_row(Row) :-
     write('Invalid Row. Please try again. '), !, 

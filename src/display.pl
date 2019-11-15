@@ -8,27 +8,6 @@ table([
 [0,0,0,0,0],
 [0,0,0,0,0]
 ]).
-table2([
-  [1,0,0,0,0],
-  [2,2,2,0,0],
-  [0,0,0,0,0],
-  [0,1,1,1,1],
-  [0,0,0,0,0]
-  ]).
-table3([
-  [1,0,0,0,0],
-  [1,0,0,2,0],
-  [1,2,0,2,0],
-  [1,0,0,2,0],
-  [0,0,0,2,0]
-  ]).
-table4([
-    [0,0,0,0,2],
-    [0,0,0,2,0],
-    [0,0,2,0,0],
-    [0,2,0,0,0],
-    [0,0,0,0,0]
-    ]).
   
 display_banner :-
     write(' _______  _______  ______    _______  ___   _______  __   __  _______    _   ___ '), nl,
@@ -85,9 +64,8 @@ display_game(Board, Player) :-
 
 init:-
  table(Board),
- % random(1, 3, Player),
- % write(Player),
- Player is 1, 
+ random(1, 3, Player),
+ write(Player),
  gameLoop(Board, Player, NBoard, 8).
 
 check:-
@@ -97,10 +75,10 @@ check:-
   Player1 is 1,
   Player2 is 2,
   
-  game_over(Board4,Winner),
-  write_game_over(Winner).
+  game_over(Board4, Winner),
+  show_winner(Winner).
 
-write_game_over(Winner):-
+show_winner(Winner):-
   write('Winner:'),
   write(Winner),
   nl.

@@ -42,7 +42,8 @@ get_clean_int(I) :-
 % Reads a char from the input stream, discarding everything after it
 get_clean_char(X) :-
     get_char(X),
-    read_line(_).
+    read_line(_),
+    nl.
 
 % Capitalizes a char (if it is an latin alphabet letter)
 capitalize_char(Char, CapitalizedChar) :-

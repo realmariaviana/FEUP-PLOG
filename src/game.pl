@@ -1,11 +1,10 @@
-
 % Starts a game depending on the mode.
-start_game('P', 'P') :-
-    write('\n       <<< Started Human vs Human >>>\n'), nl,
+start_game:-
+    nl, nl, nl, 
+    write('   Started Player vs Player'), nl,
     table(Board),
-    Player is 1,
-   % display_game(Board, Player).
-     moveComplete(Board, Player, Bd).
+    random(1, 3, Player),
+    gameLoop(Board, Player, NBoard, 8).
 
 start_game('P', 'C') :-
     write('\n       <<< Started Human vs CPU >>>\n'), nl,
