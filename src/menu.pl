@@ -25,16 +25,24 @@ manageInput(4) :-
   write('\nExiting...\n\n').
 
 readInput(Row, Column) :-
-  write('Choose row (1 to 5): '),
-  readImput(Row),
-  write('Choose column (1 to 5): '),
-  readImput(Column).
+  get_play_row(Row),
+  get_play_column(Column).
 
-readImput(Imput):-
-  get_code(Code),
-  convertCode(Code, Imput),
-  get_char(_).
+get_play_row(Row) :-
+    write('Row (1 to 5): '),
+    get_clean_int(Row), 
+    Row > 0, Row < 5, !.
 
-convertCode(Code, Inte):-
-  Aux is Code - 48,
-  Inte is Aux.
+get_play_row(Row) :-
+    write('Invalid Row. Please try again. '), !, 
+    get_play_row(Row).
+
+get_play_column(Column):-
+    write('Column (A to E): '),
+    get_clean_char(ColumnChar),
+    capitalize_char(ColumnChar, ColumnLetter),
+    column_dictionary(ColumnLetter, Column).
+
+get_play_column(Column) :-
+    write('Invalid Column. Please try again. '), 
+    get_play_column(Column).  

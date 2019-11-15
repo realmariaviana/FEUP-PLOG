@@ -41,8 +41,8 @@ display_banner :-
 
 print_table_header :-
 write('     '),
-write('1'), write(' '), write('|'), write(' '), write('2'), write(' '), write('|'), write(' '),
-write('3'), write(' '), write('|'), write(' '), write('4'), write(' '), write('|'), write(' '), write('5'), nl.
+write('A'), write(' '), write('|'), write(' '), write('B'), write(' '), write('|'), write(' '),
+write('C'), write(' '), write('|'), write(' '), write('D'), write(' '), write('|'), write(' '), write('E'), nl.
 
 print_cell(0):- put_code(173), !.
 print_cell(1):- put_code(9679), !.
@@ -85,7 +85,9 @@ display_game(Board, Player) :-
 
 init:-
  table(Board),
- Player is 1,
+ % random(1, 3, Player),
+ % write(Player),
+ Player is 1, 
  gameLoop(Board, Player, NBoard, 8).
 
 check:-
@@ -99,7 +101,9 @@ check:-
   write_game_over(Winner).
 
 write_game_over(Winner):-
-  write('Winner:'),write(Winner),write('\n').
+  write('Winner:'),
+  write(Winner),
+  nl.
 
   
 
