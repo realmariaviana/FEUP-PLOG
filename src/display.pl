@@ -62,12 +62,6 @@ display_game(Board, Player) :-
   nl,
   print_board(Board).
 
-init:-
- table(Board),
- random(1, 3, Player),
- write(Player),
- gameLoop(Board, Player, NBoard, 8).
-
 check:-
   table2(Board2),
   table3(Board3),

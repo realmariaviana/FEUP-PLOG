@@ -56,8 +56,8 @@ gameLoop(Board, Player, NBoard, Counter):-
   nl,
   Counter > 0,
   move(Board, Player, NewBoard),
-  nextPlayer(Player, NextPlayer),
   Ncounter is Counter - 1,
+  nextPlayer(Player, NextPlayer),
   gameLoop(NewBoard, NextPlayer, NBoard, Ncounter).
   
 gameLoop(Board, Player, NBoard, 0):-

@@ -40,5 +40,5 @@ get_play_column(Column):-
     column_dictionary(ColumnLetter, Column).
 
 get_play_column(Column) :-
-    write('Invalid Column. Please try again. '), 
+    write('Invalid Column. Please try again. \n'), 
     get_play_column(Column).  
