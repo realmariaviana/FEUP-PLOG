@@ -1,22 +1,21 @@
-start_game:-
-    nl, nl, nl, 
-    write('   Started Player vs Player'), nl,
+
+% Starts a game depending on the mode.
+start_game('P', 'P') :-
+    write('\n       <<< Started Human vs Human >>>\n'), nl,
     table(Board),
-    random(1, 3, Player),
-    gameLoop(Board, Player, NBoard, 8).
+    Player is 1,
+    gameLoop(Board,Player,NBoard,8).
 
 start_game('P', 'C') :-
-    nl, nl, nl, 
-    write('   Started Player vs CPU'), nl,
+    write('\n       <<< Started Human vs CPU >>>\n'), nl,
     table(Board),
     Player is 1,
     % display_game(Board, Player).
-    move_PvC_random(Board,Bd).
+    move_PvC_random(Board,Bd,8).
 
 
 start_game('C', 'C') :-
-    nl, nl, nl, 
-    write('   Started CPU vs CPU'), nl,
+    write('\n       <<< Started CPU vs CPU >>>\n'), nl,
     table(Board),
     Player is 1,
     display_game(Board, Player).
@@ -51,17 +50,7 @@ move(Board, Player, NewBoard):-
   nl,
   move(Board, Player, NewBoard).
 
-gameLoop(Board, Player, NBoard, Counter):-
-  nl,
-  display_game(Board, Player),
-  nl,
-  Counter > 0,
-  move(Board, Player, NewBoard),
-  Ncounter is Counter - 1,
-  nextPlayer(Player, NextPlayer),
-  gameLoop(NewBoard, NextPlayer, NBoard, Ncounter).
-  
-gameLoop(Board, Player, NBoard, 0):-
+replaceMove(Board,Player,BoardF):-
   write('You have all your available pieces on the board.'),
   nl,
   nl,
@@ -73,10 +62,34 @@ gameLoop(Board, Player, NBoard, 0):-
   replaceInMatrix(Board, Row, Column, 0, BoardF),
   nl,
   write('Where you want to move the piece to: '),
+  nl.
+
+gameLoop(Board, Player, NBoard, Counter):-
   nl,
+  display_game(Board, Player),
+  nl,
+  Counter > 0,
+  
+  move(Board, Player, NewBoard),
+  game_over(NewBoard,Winner),
+  (Winner =:= 0 ->
+    nextPlayer(Player, NextPlayer),
+    Ncounter is Counter - 1,
+    gameLoop(NewBoard, NextPlayer, NBoard, Ncounter)
+    ;
+    write_game_over(Winner)
+  ).
+  
+gameLoop(Board, Player, NBoard, 0):-
+  game_over(Board,Winner),
+  (Winner =:= 0 ->
+  replaceMove(Board,Player,BoardF),
   move(BoardF, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
-  gameLoop(NewBoard, NextPlayer, NBoard, 0).
+  gameLoop(NewBoard, NextPlayer, NBoard, 0)
+  ;
+  write_game_over(Winner)
+  ).
 
 nextPlayer(1, NextPlayer):-
   NextPlayer is 2.
@@ -84,13 +97,24 @@ nextPlayer(1, NextPlayer):-
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
 
-move_PvC_random(Board, NBoard):-
+move_PvC_random(Board, NBoard,Counter):-
   print_board(Board),
   nl,
+  Counter > 0,
   move(Board, 1, NewBoard),
-  %TODO- Implement cpu plays
   moveCPU_random(NewBoard,AuxBoard),
-  move_PvC_random(AuxBoard, NBoard).
+  game_over(Board,Winner),
+  write_game_over(Winner),
+  Ncounter is Counter - 1,
+  move_PvC_random(AuxBoard, NBoard,Ncounter).
+
+move_PvC_random(Board, NBoard,0):-
+  replaceMove(Board, 1, BoardF),
+  move(BoardF, Player, NewBoard),
+  moveCPU_random(NewBoard,AuxBoard),
+  game_over(Board,Winner),
+  write_game_over(Winner),
+  move_PvC_random(AuxBoard, NBoard,Counter).
 
 moveCPU_random(Board,NewBoard):-
   random(1,6,Aux1),
