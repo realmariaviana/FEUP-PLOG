@@ -8,6 +8,7 @@
 :- include('tools.pl').
 :- include('game_over.pl').
 :- use_module(library(random)).
+:- use_module(library(system)).
 
 % Starts the program
 play :-

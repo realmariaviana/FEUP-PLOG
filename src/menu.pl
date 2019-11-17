@@ -16,7 +16,7 @@ menu_option('1'):- start_game('P','P').
 
 menu_option('2') :- start_game('P','C').
 
-menu_option('3') :- write('bot Vs bot').
+menu_option('3') :- start_game('C','C').
 
 menu_option('0'):- write('\nExiting...\n\n').
 
