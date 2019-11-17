@@ -11,7 +11,7 @@ start_game('P', 'C') :-
     table(Board),
     Player is 1,
     % display_game(Board, Player).
-    move_PvC_random(Board,Bd,8).
+    move_PvC_random(Board,4).
 
 
 start_game('C', 'C') :-
@@ -77,7 +77,7 @@ gameLoop(Board, Player, NBoard, Counter):-
     Ncounter is Counter - 1,
     gameLoop(NewBoard, NextPlayer, NBoard, Ncounter)
     ;
-    write_game_over(Winner)
+    show_winner(Winner)
   ).
   
 gameLoop(Board, Player, NBoard, 0):-
@@ -88,7 +88,7 @@ gameLoop(Board, Player, NBoard, 0):-
   nextPlayer(Player, NextPlayer),
   gameLoop(NewBoard, NextPlayer, NBoard, 0)
   ;
-  write_game_over(Winner)
+  show_winner(Winner)
   ).
 
 nextPlayer(1, NextPlayer):-
@@ -97,28 +97,51 @@ nextPlayer(1, NextPlayer):-
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
 
-move_PvC_random(Board, NBoard,Counter):-
+move_PvC_random(Board,Counter):-
   print_board(Board),
-  nl,
-  Counter > 0,
-  move(Board, 1, NewBoard),
-  moveCPU_random(NewBoard,AuxBoard),
+  Counter >0,
+  
   game_over(Board,Winner),
-  write_game_over(Winner),
-  Ncounter is Counter - 1,
-  move_PvC_random(AuxBoard, NBoard,Ncounter).
+    Ncounter is Counter - 1,
 
-move_PvC_random(Board, NBoard,0):-
-  replaceMove(Board, 1, BoardF),
-  move(BoardF, Player, NewBoard),
-  moveCPU_random(NewBoard,AuxBoard),
+  (Winner =:= 0 ->
+    move(Board, 1, AuxBoard),
+
+    choose_move(AuxBoard,1,Move),
+    apply_move(AuxBoard,Move,2,NewBoard),
+    move_PvC_random(NewBoard,Ncounter)
+    ;
+    show_winner(Winner)
+  ).
+
+move_PvC_random(Board,0):-
   game_over(Board,Winner),
-  write_game_over(Winner),
-  move_PvC_random(AuxBoard, NBoard,Counter).
 
-moveCPU_random(Board,NewBoard):-
+  (Winner =:= 0 ->
+    replaceMove(Board, 1, BoardF),
+    move(BoardF, 1, AuxBoard),
+
+    choose_move(AuxBoard, 1, Move),
+    apply_move(AuxBoard,Move,2,NewBoard),
+    move_PvC_random(NewBoard,0)
+    ;
+    show_winner(Winner)
+  ).
+
+moveCPU_random(Board,Move):-
   random(1,6,Aux1),
   random(1,6,Aux2),
+
   checkPlay(Aux1,Aux2, Board,Bool),
-  (Bool =:= 0 -> replaceInMatrix(Board, Aux1, Aux2, 2, NewBoard);moveCPU_random(Board,NewBoard)).
+  (Bool =:= 0 -> 
+    append([Aux1], [Aux2], Move)
+    ;
+    moveCPU_random(Board,Move)
+  ).
+
+choose_move(Board, Level, Move):-
+  moveCPU_random(Board,Move).
+
+apply_move(Board,[H|T],Player,NewBoard):-
+  replaceInMatrix(Board, H, T, 2, NewBoard).
   

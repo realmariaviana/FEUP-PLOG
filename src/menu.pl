@@ -12,11 +12,11 @@ display_menu :-
     menu_option(Option).
 
 % Executes the appropriate actions depending on the option chosen
-menu_option('1'):- start_game.
+menu_option('1'):- start_game('P','P').
 
-menu_option('2') :- write('bot.').
+menu_option('2') :- start_game('P','C').
 
-menu_option('3') :- write('bot.').
+menu_option('3') :- write('bot Vs bot').
 
 menu_option('0'):- write('\nExiting...\n\n').
 

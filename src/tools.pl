@@ -61,3 +61,7 @@ column_dictionary(Column, Number) :-
     Code >= 65,
     Code =< 69,
     Number is (Code - 64).
+/*
+get_valid_moves(Row,Column,Board):-
+  result([])
+  (Column > 0 -> )*/
