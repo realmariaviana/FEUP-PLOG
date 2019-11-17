@@ -4,14 +4,14 @@ start_game('P', 'P') :-
     write('\n       <<< Started Human vs Human >>>\n'), nl,
     table(Board),
     Player is 1,
-    gameLoop(Board,Player,NBoard,8).
+    gameLoopPvP(Board,Player,NBoard,8).
 
 start_game('P', 'C') :-
     write('\n       <<< Started Human vs CPU >>>\n'), nl,
     table(Board),
     Player is 1,
     % display_game(Board, Player).
-    move_PvC_random(Board,4).
+    gameLoopPvC(Board,4).
 
 
 start_game('C', 'C') :-
@@ -64,7 +64,7 @@ replaceMove(Board,Player,BoardF):-
   write('Where you want to move the piece to: '),
   nl.
 
-gameLoop(Board, Player, NBoard, Counter):-
+gameLoopPvP(Board, Player, NBoard, Counter):-
   nl,
   display_game(Board, Player),
   nl,
@@ -75,18 +75,18 @@ gameLoop(Board, Player, NBoard, Counter):-
   (Winner =:= 0 ->
     nextPlayer(Player, NextPlayer),
     Ncounter is Counter - 1,
-    gameLoop(NewBoard, NextPlayer, NBoard, Ncounter)
+    gameLoopPvP(NewBoard, NextPlayer, NBoard, Ncounter)
     ;
     show_winner(Winner)
   ).
   
-gameLoop(Board, Player, NBoard, 0):-
+gameLoopPvP(Board, Player, NBoard, 0):-
   game_over(Board,Winner),
   (Winner =:= 0 ->
   replaceMove(Board,Player,BoardF),
   move(BoardF, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
-  gameLoop(NewBoard, NextPlayer, NBoard, 0)
+  gameLoopPvP(NewBoard, NextPlayer, NBoard, 0)
   ;
   show_winner(Winner)
   ).
@@ -97,33 +97,34 @@ nextPlayer(1, NextPlayer):-
 nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
 
-move_PvC_random(Board,Counter):-
+gameLoopPvC(Board,Counter):-
   print_board(Board),
   Counter >0,
   
   game_over(Board,Winner),
-    Ncounter is Counter - 1,
-
+  Ncounter is Counter - 1,
   (Winner =:= 0 ->
     move(Board, 1, AuxBoard),
 
     choose_move(AuxBoard,1,Move),
     apply_move(AuxBoard,Move,2,NewBoard),
-    move_PvC_random(NewBoard,Ncounter)
+    gameLoopPvC(NewBoard,Ncounter)
     ;
     show_winner(Winner)
   ).
 
-move_PvC_random(Board,0):-
+gameLoopPvC(Board,Counter):-
   game_over(Board,Winner),
 
   (Winner =:= 0 ->
     replaceMove(Board, 1, BoardF),
     move(BoardF, 1, AuxBoard),
 
-    choose_move(AuxBoard, 1, Move),
-    apply_move(AuxBoard,Move,2,NewBoard),
-    move_PvC_random(NewBoard,0)
+    choose_replace_move(AuxBoard,1,AuxBotBoard),
+    choose_move(AuxBotBoard, 1, Move),
+    apply_move(AuxBotBoard,Move,2,NewBoard),
+
+    gameLoopPvC(NewBoard,0)
     ;
     show_winner(Winner)
   ).
@@ -139,9 +140,27 @@ moveCPU_random(Board,Move):-
     moveCPU_random(Board,Move)
   ).
 
+replaceCPU_random(Board,AuxBotBoard):-
+  random(1,6,Aux1),
+  random(1,6,Aux2),
+
+  getValueFromMatrix(Board, Aux1, Aux2, Value),
+
+  (Value =:= 2 -> 
+    replaceInMatrix(Board, Aux1, Aux2, 0, AuxBotBoard)    
+    ;
+    replaceCPU_random(Board,AuxBotBoard)
+  ).
+
 choose_move(Board, Level, Move):-
-  moveCPU_random(Board,Move).
+  (Level =:= 1 ->
+    moveCPU_random(Board,Move)
+  ).
 
 apply_move(Board,[H|T],Player,NewBoard):-
   replaceInMatrix(Board, H, T, 2, NewBoard).
   
+choose_replace_move(Board,Level,AuxBotBoard):-
+  (Level =:= 1 ->
+    replaceCPU_random(Board,AuxBotBoard)
+    ).
