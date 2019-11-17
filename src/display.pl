@@ -62,16 +62,6 @@ display_game(Board, Player) :-
   nl,
   print_board(Board).
 
-check:-
-  table2(Board2),
-  table3(Board3),
-  table4(Board4),
-  Player1 is 1,
-  Player2 is 2,
-  
-  game_over(Board4, Winner),
-  show_winner(Winner).
-
 show_winner(Winner):-
   write('Winner:'),
   write(Winner),

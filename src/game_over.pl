@@ -17,6 +17,9 @@ check_row_win(Board,Player, Row , Column, Counter, NewCounter ,Res):-
         )
     ).
 
+check_row_win(_,_,_ , _, _, _ ,Res):-
+    Res is 0.
+
 /**
  * Verificação se uma coluna tem
  * quatro peças consecutivas
@@ -36,6 +39,9 @@ check_column_win(Board,Player, Row , Column, Counter, NewCounter ,Res):-
             check_column_win(Board,Player,Row + 1, Column , NewCounter,_ ,Res)
         )
     ).
+
+check_column_win(_,_, _ , _, _, _ ,Res):-
+    Res is 0.
 
 /** 
  * Verificação se uma diagonal sentido NO -> SE tem
@@ -90,6 +96,9 @@ check_diagonal_right_win(Board,Player,Res):-
     check_one_right_diagonal(Board,Player,1,2,0,0,Res4),
     (Res1 =:= 1; Res2 =:= 1; Res3 =:= 1; Res4 =:= 1),   Res is 1.
 
+check_diagonal_right_win(_,_,Res):-
+    Res is 0.
+
 /**
  * Verificação se alguma diagonal sentido NE -> SO tem
  * quatro peças consecutivas
@@ -101,14 +110,7 @@ check_diagonal_left_win(Board,Player,Res):-
     check_one_left_diagonal(Board,Player,5,2,0,0,Res4),
     (Res1 =:= 1; Res2 =:= 1; Res3 =:= 1; Res4 =:= 1),   Res is 1.
 
-
-check_row_win(Board,Player, Row , Column, Counter, NewCounter ,Res):-
-    Res is 0.
-check_column_win(Board,Player, Row , Column, Counter, NewCounter ,Res):-
-    Res is 0.
-check_diagonal_right_win(Board,Player,Res):-
-    Res is 0.
-check_diagonal_left_win(Board,Player,Res):-
+check_diagonal_left_win(_,_,Res):-
     Res is 0.
 
 /**

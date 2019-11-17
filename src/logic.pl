@@ -4,12 +4,11 @@ start_game('P', 'P') :-
     write('\n       <<< Started Human vs Human >>>\n'), nl,
     table(Board),
     Player is 1,
-    gameLoopPvP(Board,Player,NBoard,8).
+    gameLoopPvP(Board,Player,8).
 
 start_game('P', 'C') :-
     write('\n       <<< Started Human vs CPU >>>\n'), nl,
     table(Board),
-    Player is 1,
     % display_game(Board, Player).
     gameLoopPvC(Board,4).
 
@@ -24,7 +23,7 @@ isEmptyCell(Board, Row, Column, Res) :-
   Value =:= 0,
   Res is 1.
 
-isEmptyCell(Board, Row, Column, Res) :-
+isEmptyCell(_, _, _, Res) :-
   Res is 0.
 
 checkPlay(Row, Column, Board, Res):-
@@ -35,7 +34,7 @@ checkPlay(Row, Column, Board, Res):-
   isEmptyCell(Board, Row, Column, NRes),
   NRes \= 0, Res is 0.
 
-checkPlay(Row, Column, Board, Res):- Res is 1.
+checkPlay(_, _, _, Res):- Res is 1.
 
 move(Board, Player, NewBoard):-
   readInput(Row, Column),
@@ -71,7 +70,7 @@ nextPlayer(2, NextPlayer):-
   NextPlayer is 1.
 
 %Game Loops
-gameLoopPvP(Board, Player, NBoard, Counter):-
+gameLoopPvP(Board, Player, Counter):-
   nl,
   display_game(Board, Player),
   nl,
@@ -82,18 +81,18 @@ gameLoopPvP(Board, Player, NBoard, Counter):-
   (Winner =:= 0 ->
     nextPlayer(Player, NextPlayer),
     Ncounter is Counter - 1,
-    gameLoopPvP(NewBoard, NextPlayer, NBoard, Ncounter)
+    gameLoopPvP(NewBoard, NextPlayer, Ncounter)
     ;
     show_winner(Winner)
   ).
   
-gameLoopPvP(Board, Player, NBoard, 0):-
+gameLoopPvP(Board, Player, 0):-
   game_over(Board,Winner),
   (Winner =:= 0 ->
   replaceMove(Board,Player,BoardF),
   move(BoardF, Player, NewBoard),
   nextPlayer(Player, NextPlayer),
-  gameLoopPvP(NewBoard, NextPlayer, NBoard, 0)
+  gameLoopPvP(NewBoard, NextPlayer, 0)
   ;
   show_winner(Winner)
   ).
@@ -113,7 +112,7 @@ gameLoopPvC(Board,Counter):-
     show_winner(Winner)
   ).
 
-gameLoopPvC(Board,Counter):-
+gameLoopPvC(Board,_):-
   game_over(Board,Winner),
 
   (Winner =:= 0 ->
@@ -128,6 +127,7 @@ gameLoopPvC(Board,Counter):-
     ;
     show_winner(Winner)
   ).
+
 gameLoopCvC(Board,CPUPlayer,Counter):-
   print_board(Board),
   nl,
@@ -144,7 +144,7 @@ gameLoopCvC(Board,CPUPlayer,Counter):-
     ;
     show_winner(Winner)
   ).
-gameLoopCvC(Board,CPUPlayer,Counter):-
+gameLoopCvC(Board,CPUPlayer,_):-
   game_over(Board,Winner),
   (Winner =:= 0 ->
     choose_replace_move(Board,1,CPUPlayer,AuxBotBoard),
