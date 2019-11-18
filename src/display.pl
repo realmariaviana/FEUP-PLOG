@@ -63,9 +63,8 @@ display_game(Board, Player) :-
   print_board(Board).
 
 show_winner(Winner):-
-  write('Winner:'),
-  write(Winner),
-  nl.
+  Winner =:= 1,nl, write('       WINNER: black');
+  Winner =:= 2, nl, write(       WINNER: white).
 
   
 
