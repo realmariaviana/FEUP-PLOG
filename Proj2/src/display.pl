@@ -56,8 +56,7 @@ print_format_number(N) :-
 
 print_board(Board) :-
   print_table_header,
-  board(Board, 1),
-  print_table_header.
+  board(Board, 1).
 
 
 display_game(Board, Player) :-

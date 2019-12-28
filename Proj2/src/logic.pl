@@ -1,8 +1,6 @@
 start_game :-
-    write('\n       <<< Started CPU vs CPU >>>\n'), nl,
     table(Board),
-    gameLoopCvC(Board,1,8).
-  
+    print_board(Board).  
 
 isEmptyCell(Board, Row, Column, Res) :-
   getValueFromMatrix(Board, Row, Column, Value),
