@@ -1,6 +1,5 @@
 :- use_module(library(lists)).
 
-%
 table([
 [0,0,0,2],
 [0,9,0,0],
@@ -10,12 +9,12 @@ table([
   
 display_banner :-
   nl, nl,
-  write('  M I D D L E  S U M          '),
+  write(' M I D D L E  S U M          '),
   nl,nl.
 
 print_table_header :-
 write('   '),
-nl.
+ write('\n|---|---|---|---|\n').
 
 print_cell(0):- write(' '), !.
 print_cell(1):- write('1'), !.
@@ -38,7 +37,7 @@ board([], 6):- !.
 board([H|T], N) :-
   write('| '),
   print_column(H),
-  nl,
+   write('\n|---|---|---|---|\n'),
   Next is (N + 1),
   board(T, Next).
 
@@ -48,9 +47,3 @@ print_board(Board) :-
 
 display_game(Board, Player) :-
   print_board(Board).
-
-
-  
-
-  
-
