@@ -11,7 +11,7 @@ define_board(Size, Board):-
     restrictLines(Board, Size),
     restrictColumns(Board,Size,Size),
     labeling([ffc], List),
-    print_board(Board).  
+    print_board(Board,Size).  
 
   givenContrains(_,[]).
   givenContrains(Board, [Row-Column-Number|T]):-
