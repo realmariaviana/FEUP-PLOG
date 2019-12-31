@@ -3,7 +3,7 @@ define_board(Size, Board):-
   length(Board, Length),
   domain(Board, 0, 9).
 
-start_game :-
+  start_game :-
     define_board(5,List),
     list_to_matrix(List, 5, Board),
     restrictLines(Board, 5),
@@ -11,6 +11,12 @@ start_game :-
    % count(1, List, #=, Count),
     labeling([], List),
     print_board(Board).  
+  
+  board(1,4,[1-4-2, 2-2-9, 3-1-7, 4-3-3]).
+  board(2,5,[1-1-3, 2-5-3, 3-3-5, 4-4-1, 5-2-6]).
+  board(3,6,[1-2-3, 2-1-1, 3-6-3, 4-4-2, 5-5-8, 6-3-8]).
+  board(4,7,[1-6-2, 2-4-9, 3-1-5, 4-3-4, 5-7-8, 6-2-4, 7-5-4]).
+  board(5,8,[1-2-7, 2-6-4, 3-7-5, 4-5-8, 5-8-3, 6-4-2, 7-3-3, 8-1-2]).
 
 restrictLine(Line, Size):-
   LineLength #= Size-3,
@@ -33,12 +39,19 @@ restrictLines([H|T], Size):-
    restrictLine(H,Size), 
   restrictLines(T,Size).
 
-extractColumn(ColNumber, Matrix, Column) :-
-  maplist(nth1(ColNumber), Matrix, Column).
+rowN([H|_],1,H):-!.
+rowN([_|T],I,X) :-
+  I1 is I-1,
+  rowN(T,I1,X).
+
+columnN([],_,[]).
+columnN([H|T], I, [R|X]):-
+  rowN(H, I, R),
+  columnN(T,I,X).
 
 restrictColumns(_,_,0).
 restrictColumns(Board, Size, Index):-
-extractColumn(Index, Board,Column),
+columnN(Board, Index,Column),
 restrictLine(Column,Size),
 NewIndex is Index -1,
 restrictColumns(Board,Size, NewIndex).

@@ -1,7 +1,5 @@
 /*
 ['/Users/mariajoaosenraviana/Desktop/FEUP-PLOG/Proj2/src/middlesum.pl'].
-['/Users/mariajoaosenraviana/Downloads/FEUP-PLOG-master/projeto2/BosnianSnake.pl']
-
 */
 
 :- include('display.pl').
