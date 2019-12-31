@@ -1,14 +1,6 @@
   :- use_module(library(lists)).
 
-%
-table([
-3,0,0,0,0,
-0,0,0,0,3,
-0,0,5,0,0,
-0,0,0,1,0,
-0,6,0,0,0
-]).
-  
+
 display_banner :-
   nl, nl,
   write(' M I D D L E  S U M  '),
