@@ -7,8 +7,9 @@ start_game :-
     define_board(5,List),
     list_to_matrix(List, 5, Board),
     restrictLines(Board, 5),
+    restrictColumns(Board,5,5),
    % count(1, List, #=, Count),
-    labeling([ffc], List),
+    labeling([], List),
     print_board(Board).  
 
 restrictLine(Line, Size):-
@@ -23,9 +24,14 @@ restrictLines([H|T], Size):-
    restrictLine(H,Size), 
   restrictLines(T,Size).
 
+extractColumn(ColNumber, Matrix, Column) :-
+  maplist(nth1(ColNumber), Matrix, Column).
 
-constrain_horizontal_lines(_,[]).
-constrain_horizontal_lines(Board,[Row-Num|T]):-
-  nth1(Row,Board,Line),
-  sum(Line,#=,Num),
-  constrain_horizontal_lines(Board,T).
+restrictColumns(_,_,0).
+restrictColumns(Board, Size, Index):-
+extractColumn(Index, Board,Column),
+restrictLine(Column,Size),
+NewIndex is Index -1,
+restrictColumns(Board,Size, NewIndex).
+
+

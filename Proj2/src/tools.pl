@@ -1,5 +1,3 @@
-extractColumn(ColNumber, Matrix, Column) :-
-  maplist(nth0(ColNumber), Matrix, Column).
 
 /*extractAllColumns(Counter, [H|T], Column):-
   Counter is 0,
