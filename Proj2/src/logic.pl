@@ -17,7 +17,16 @@ restrictLine(Line, Size):-
   maximum(Max, Line),
   Double #= Max * 2,
   sum(Line,#=,Double),  
-  count(0,Line, #=, LineLength).
+  count(0,Line, #=, LineLength),
+  A #\= 0,
+	B #\= 0,
+	C #\= 0,
+	element(I, Line, A),
+	I1 #>I,
+	I2 #<I,
+	element(I1, Line, B),
+	element(I2, Line, C),
+	A #= B+C.
 
 restrictLines([],_).
 restrictLines([H|T], Size):-
