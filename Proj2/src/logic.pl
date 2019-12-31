@@ -5,13 +5,12 @@ define_board(Size, Board):-
 
   start_game(N) :-
     board(N, Size,Restrictions),
-    define_board(5,List),
+    define_board(Size,List),
     list_to_matrix(List, Size, Board),
     givenContrains(Board,Restrictions),
     restrictLines(Board, Size),
     restrictColumns(Board,Size,Size),
-   % count(1, List, #=, Count),
-    labeling([], List),
+    labeling([ffc], List).
     print_board(Board).  
 
   givenContrains(_,[]).
