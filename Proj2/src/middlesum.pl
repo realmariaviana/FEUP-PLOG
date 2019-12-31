@@ -7,6 +7,8 @@
 :- include('tools.pl').
 :- use_module(library(random)).
 :- use_module(library(system)).
+:- use_module(library(clpfd)).
+:- use_module(library(lists)).
 
 % Starts the program
 play :-
