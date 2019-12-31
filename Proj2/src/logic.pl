@@ -10,7 +10,7 @@ define_board(Size, Board):-
     givenContrains(Board,Restrictions),
     restrictLines(Board, Size),
     restrictColumns(Board,Size,Size),
-    labeling([ffc], List).
+    labeling([ffc], List),
     print_board(Board).  
 
   givenContrains(_,[]).
