@@ -27,7 +27,7 @@ print_column([H|T]) :-
     write(' | '),
     print_column(T).
 
-board([], 6):- !.
+board([], _):- !.
 board([H|T], N) :-
   write('| '),
   print_column(H),
