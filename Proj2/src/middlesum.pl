@@ -11,6 +11,6 @@
 :- include('tools.pl').
 
 % Starts the program
-play(N) :-
+solve(N) :-
     display_banner,
-    start_game(N).
+    start_solving(N).

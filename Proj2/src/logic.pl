@@ -3,7 +3,7 @@ define_board(Size, Board):-
   length(Board, Length),
   domain(Board, 0, 9).
 
-  start_game(N) :-
+  start_solving(N) :-
     board(N, Size,Restrictions),
     define_board(Size,List),
     list_to_matrix(List, Size, Board),
