@@ -3,15 +3,24 @@ define_board(Size, Board):-
   length(Board, Length),
   domain(Board, 0, 9).
 
-  start_game :-
+  start_game(N) :-
+    board(N, Size,Restrictions),
     define_board(5,List),
-    list_to_matrix(List, 5, Board),
-    restrictLines(Board, 5),
-    restrictColumns(Board,5,5),
+    list_to_matrix(List, Size, Board),
+    givenContrains(Board,Restrictions),
+    restrictLines(Board, Size),
+    restrictColumns(Board,Size,Size),
    % count(1, List, #=, Count),
     labeling([], List),
     print_board(Board).  
-  
+
+  givenContrains(_,[]).
+  givenContrains(Board, [Row-Column-Number|T]):-
+    rowN(Board, Row, Line),
+    element(Column, Line, Restriction),
+    Restriction #= Number,
+    givenContrains(Board, T).
+
   board(1,4,[1-4-2, 2-2-9, 3-1-7, 4-3-3]).
   board(2,5,[1-1-3, 2-5-3, 3-3-5, 4-4-1, 5-2-6]).
   board(3,6,[1-2-3, 2-1-1, 3-6-3, 4-4-2, 5-5-8, 6-3-8]).

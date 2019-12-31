@@ -11,6 +11,6 @@
 :- use_module(library(lists)).
 
 % Starts the program
-play :-
+play(N) :-
     display_banner,
-    start_game.
+    start_game(N).
