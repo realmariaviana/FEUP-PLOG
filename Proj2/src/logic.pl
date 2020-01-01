@@ -3,28 +3,29 @@ define_board(Size, Board):-
   length(Board, Length),
   domain(Board, 0, 9).
 
-  start_solving(N) :-
-    board(N, Size,Restrictions),
-    define_board(Size,List),
-    list_to_matrix(List, Size, Board),
-    givenContrains(Board,Restrictions),
-    restrictLines(Board, Size),
-    restrictColumns(Board,Size,Size),
-    labeling([ffc], List),
-    print_board(Board,Size).  
+start_solving(N) :-
+  board(N, Size,Restrictions),
+  define_board(Size,List),
+  list_to_matrix(List, Size, Board),
+  givenContrains(Board,Restrictions),
+  restrictLines(Board, Size),
+  restrictColumns(Board,Size,Size),
+  labeling([ffc], List),
+  print_board(Board,Size).  
 
-  givenContrains(_,[]).
-  givenContrains(Board, [Row-Column-Number|T]):-
-    rowN(Board, Row, Line),
-    element(Column, Line, Restriction),
-    Restriction #= Number,
-    givenContrains(Board, T).
 
-  board(1,4,[1-4-2, 2-2-9, 3-1-7, 4-3-3]).
-  board(2,5,[1-1-3, 2-5-3, 3-3-5, 4-4-1, 5-2-6]).
-  board(3,6,[1-2-3, 2-1-1, 3-6-3, 4-4-2, 5-5-8, 6-3-8]).
-  board(4,7,[1-6-2, 2-4-9, 3-1-5, 4-3-4, 5-7-8, 6-2-4, 7-5-4]).
-  board(5,8,[1-2-7, 2-6-4, 3-7-5, 4-5-8, 5-8-3, 6-4-2, 7-3-3, 8-1-2]).
+givenContrains(_,[]).
+givenContrains(Board, [Row-Column-Number|T]):-
+  rowN(Board, Row, Line),
+  element(Column, Line, Restriction),
+  Restriction #= Number,
+  givenContrains(Board, T).
+
+board(1,4,[1-4-2, 2-2-9, 3-1-7, 4-3-3]).
+board(2,5,[1-1-3, 2-5-3, 3-3-5, 4-4-1, 5-2-6]).
+board(3,6,[1-2-3, 2-1-1, 3-6-3, 4-4-2, 5-5-8, 6-3-8]).
+board(4,7,[1-6-2, 2-4-9, 3-1-5, 4-3-4, 5-7-8, 6-2-4, 7-5-4]).
+board(5,8,[1-2-7, 2-6-4, 3-7-5, 4-5-8, 5-8-3, 6-4-2, 7-3-3, 8-1-2]).
 
 restrictLine(Line, Size):-
   LineLength #= Size-3,
@@ -59,9 +60,13 @@ columnN([H|T], I, [R|X]):-
 
 restrictColumns(_,_,0).
 restrictColumns(Board, Size, Index):-
-columnN(Board, Index,Column),
-restrictLine(Column,Size),
-NewIndex is Index -1,
-restrictColumns(Board,Size, NewIndex).
+  columnN(Board, Index,Column),
+  restrictLine(Column,Size),
+  NewIndex is Index -1,
+  restrictColumns(Board,Size, NewIndex).
 
+start_generating(N):-
+  define_board(N,List),
+  list_to_matrix(List, N, Board),
 
+  print_board(Board,N).

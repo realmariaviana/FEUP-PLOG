@@ -14,3 +14,7 @@
 solve(N) :-
     display_banner,
     start_solving(N).
+
+generate(N):-
+    display_banner,
+    start_generating(N).
