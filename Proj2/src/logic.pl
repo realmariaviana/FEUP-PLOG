@@ -69,4 +69,8 @@ start_generating(N):-
   define_board(N,List),
   list_to_matrix(List, N, Board),
 
+
+  restrictLines(Board, N),
+  restrictColumns(Board,N,N),
+  labeling([ffc], List),
   print_board(Board,N).
