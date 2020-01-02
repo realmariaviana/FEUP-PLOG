@@ -89,9 +89,9 @@ start_generating(N):-
   write('Board to Solve\n'),
   nl,
   print_board(Board,N),
-
+  nl,
   write('Board Solved'),
-  nl,  
+  nl, nl,
   print_board(BoardSolved,N).
 
 
