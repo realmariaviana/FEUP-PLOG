@@ -70,7 +70,27 @@ start_generating(N):-
   list_to_matrix(List, N, Board),
 
 
-  restrictLines(Board, N),
-  restrictColumns(Board,N,N),
+  restrictCreateLines(Board, N),
+  restrictCreateColumns(Board,N,N),
   labeling([ffc], List),
   print_board(Board,N).
+
+
+restrictCreateLine(Line, Size):-
+  LineLength #= Size-1,
+  sum(Line,#=,Double),  
+  count(0,Line, #=, LineLength),
+  A #\= 0,
+	element(I, Line, A).
+
+restrictCreateLines([],_).
+restrictCreateLines([H|T], Size):-
+  restrictCreateLine(H,Size), 
+  restrictCreateLines(T,Size).
+
+restrictCreateColumns(_,_,0).
+restrictCreateColumns(Board, Size, Index):-
+  columnN(Board, Index,Column),
+  restrictCreateLine(Column,Size),
+  NewIndex is Index -1,
+  restrictCreateColumns(Board,Size, NewIndex).
