@@ -1,3 +1,5 @@
+
+
 define_board(Size, Board):-
   Length is Size*Size,
   length(Board, Length),
@@ -31,7 +33,7 @@ restrictLine(Line, Size):-
   LineLength #= Size-3,
   maximum(Max, Line),
   Double #= Max * 2,
-  sum(Line,#=,Double),  
+  sum(Line,#=,Double),
   count(0,Line, #=, LineLength),
   A #\= 0,
 	B #\= 0,
@@ -45,7 +47,8 @@ restrictLine(Line, Size):-
 
 restrictLines([],_).
 restrictLines([H|T], Size):-
-   restrictLine(H,Size), 
+   restrictLine(H,Size),
+    
   restrictLines(T,Size).
 
 rowN([H|_],1,H):-!.
@@ -72,8 +75,25 @@ start_generating(N):-
 
   restrictCreateLines(Board, N),
   restrictCreateColumns(Board,N,N),
+
   labeling([ffc], List),
-  print_board(Board,N).
+  createRestrictions(Board,0,0,N,[], Restrictions_final),/* 
+  write('Restrictions:\n'),
+  write(Restrictions_final),
+  nl, */
+  
+  
+
+  isSolvable(N,Restrictions_final,BoardSolved),
+
+  write('Board to Solve\n'),
+  nl,
+  print_board(Board,N),
+
+  write('Board Solved'),
+  nl,  
+  print_board(BoardSolved,N).
+
 
 
 restrictCreateLine(Line, Size):-
@@ -94,3 +114,46 @@ restrictCreateColumns(Board, Size, Index):-
   restrictCreateLine(Column,Size),
   NewIndex is Index -1,
   restrictCreateColumns(Board,Size, NewIndex).
+
+isSolvable(Size,Restrictions,BoardSolved):-
+  
+  define_board(Size,List),
+  list_to_matrix(List, Size, Board),
+
+  givenContrains(Board,Restrictions),
+  
+  restrictLines(Board, Size),
+  restrictColumns(Board,Size,Size),
+
+  labeling([ffc], List),
+  
+  BoardSolved = Board.
+
+
+
+createRestrictions([],_,_,_,Restrictions_final, Restrictions_final).
+
+createRestrictions([H|T],Row,Column,N,Restrictions_aux, Restrictions_final):-
+  (Column \= N ->
+    % getValueFromList(H,Column,Aux1),
+    nth0(Column,H,Aux1),
+    (Aux1 =:= 0 ->
+      New_column is Column +1,
+      createRestrictions([H|T],Row,New_column,N,Restrictions_aux,Restrictions_final)
+      ;
+      Row_to_append is Row+1,
+      Column_to_append is Column+1,
+
+      append(Restrictions_aux,[Row_to_append-Column_to_append-Aux1],Restrictions_aux1),
+      
+      
+      New_row is Row +1,
+      New_column is 0,
+      createRestrictions(T,New_row,New_column,N,Restrictions_aux1,Restrictions_final)
+    )
+    ;
+    New_row is Row +1,
+      New_column is N,
+      createRestrictions(T,New_row,New_column,N,Restrictions_aux,Restrictions_final)
+  ).
+
