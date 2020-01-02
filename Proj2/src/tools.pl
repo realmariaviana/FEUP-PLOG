@@ -8,9 +8,10 @@ list_to_matrix_row([Item|List], Size, [Item|Row],Tail):-
   NSize is Size-1,
   list_to_matrix_row(List,NSize,Row,Tail).
 
-getValueFromList([H|_T], 1, H).
+reset_timer :-
+  statistics(walltime,_).
 
-getValueFromList([_H|T], Index, Value) :-
-  Index > 0,
-  Index1 is Index - 1,
-  getValueFromList(T, Index1, Value).
+print_time :-
+  statistics(walltime,[_,T]),
+  TS is ((T//10)*10)/1000,
+  nl, write('Solution Time: '), write(TS), write('s'), nl, nl.

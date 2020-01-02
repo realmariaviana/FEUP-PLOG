@@ -1,5 +1,4 @@
-  :- use_module(library(lists)).
-
+:- use_module(library(lists)).
 
 display_banner :-
   nl, nl,
